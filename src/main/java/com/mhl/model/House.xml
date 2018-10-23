@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.HouseMapper">
+	<resultMap type="House" id="myhouse">
+		<id column="id" property="id"/>
+		<result column="hname" property="hname"/>
+		<result column="size" property="size"/>
+		<result column="beds" property="beds"/>
+		<result column="price" property="price"/>
+		<result column="dis" property="dis"/>
+		<result column="info" property="info"/>
+		<result column="pica" property="pica"/>
+		<result column="picb" property="picb"/>
+		<result column="picc" property="picc"/>
+		<result column="picd" property="picd"/>
+		<result column="pice" property="pice"/>
+		<result column="picf" property="picf"/>
+		<result column="status" property="status"/>
+		<association property="kind" javaType="Kind">
+			<id column="kid" property="id"/>
+			<result column="name" property="name"/>
+			<result column="icon" property="icon"/>
+			<result column="kinfo" property="info"/>
+		</association>
+	</resultMap>
+	<select id="selectbykind" resultType="Charts">
+		select b.name,count(*) as num from house a left join kind b on a.kid=b.id group by b.name
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="myhouse">
+		select a.name,a.info kinfo,a.id kid,a.icon,b.* from kind a right join house b on a.id=b.kid where b.status!=-1 and b.id=#{id}
+	</select>
+	
+	<select id="select" parameterType="map" resultMap="myhouse">
+		select a.name,a.info kinfo,a.id kid,a.icon,b.* from kind a right join house b on a.id=b.kid where b.status!=-1 
+		<if test="kid!=null">
+			and b.kid =#{kid}
+		</if>
+		<if test="beds!=null">
+			and b.beds=#{beds}
+		</if>
+		order by b.id desc
+	</select>
+	<select id="select2" parameterType="map" resultType="House">
+		 select * from house where kid=#{kid} and status!=-1 and id not in(
+		       select hid from (     
+		           select hid from reserve
+		           where res!=-1 and (#{rdate}&lt;=rdate and rdate&lt;=#{ldate})
+		           or (#{rdate}&lt;=ldate and ldate&lt;=#{ldate})
+		           union
+		           select hid from record
+		           where status==0 and (#{rdate}&lt;=rtime and rtime&lt;=#{ldate})
+		           or (#{rdate}&lt;=ltime and ltime&lt;=#{ldate})
+		       ) as a
+		  )
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="House">
+		insert into house(hname,kid,size,beds,price,dis,info,pica,picb,picc,picd,pice,picf) values(#{hname},#{kid},#{size},#{beds},#{price},#{dis},#{info},#{pica},#{picb},#{picc},#{picd},#{pice},#{picf})
+	</insert>
+	
+	<update id="updateimg" parameterType="House">
+		update house set 
+		<if test="pica!=null">pica=#{pica},</if>
+		<if test="picb!=null">picb=#{picb},</if>
+		<if test="picc!=null">picc=#{picc},</if>
+		<if test="picd!=null">picd=#{picd},</if> 
+		id=#{id}
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		update house set status = -1 where id=#{0}
+	</delete>
+	<update id="enable" parameterType="House">
+		update house set status = #{status} where id=#{id}
+	</update>
+	<update id="update" parameterType="House">
+		update house set hname=#{hname},kid=#{kid},size=#{size},beds=#{beds},price=#{price},dis=#{dis},info=#{info} where id=#{id}
+	</update>
+</mapper>

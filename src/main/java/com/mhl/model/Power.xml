@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.PowerMapper">
+
+	<select id="seleone" parameterType="Integer" resultType="Power">
+		select * from power where id=#{0} and status!=-1
+	</select>
+	<select id="sele2" resultType="Power">
+		select id,pname from power where pid=0 and status!=-1
+	</select>
+	<select id="sele" resultType="Power">
+		select a.id,a.pid,a.pname,ifnull(b.pname,'无') fname,a.url,a.icon,a.xh,a.status
+		from power a
+		left join 
+		(select id,pname from power) b 
+		on a.pid=b.id
+		where a.status!=-1 order by a.xh
+	</select>
+	<delete id="dele" parameterType="Integer">
+		update power set status=-1 where id=#{0}
+	</delete>
+	<insert id="insert" parameterType="Power">
+		insert into power(pid,pname,url,icon,xh) values(#{pid},#{pname},#{url},#{icon},#{xh})
+	</insert>
+	
+	
+	<update id="update" parameterType="Power">
+		update power set pid=#{pid},pname=#{pname},url=#{url},icon=#{icon},xh=#{xh}
+		where id=#{id}
+	</update>
+	<update id="updatexh" parameterType="map">
+		update power set 
+		<if test="flag==0">xh=xh+1</if>
+		<if test="flag==1 and xh>0">xh=xh-1</if>
+		where id=#{id}
+	</update>
+	
+	
+	
+	
+</mapper>

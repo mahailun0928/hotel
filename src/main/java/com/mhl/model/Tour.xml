@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.TourMapper">
+	
+	<select id="selectone" parameterType="Integer" resultType="Tour">
+		select * from tour where id=#{0}
+	</select>
+	<select id="select" parameterType="map" resultType="Tour">
+	
+		select * from tour where 2>1 
+		<if test="title!=null">
+			and title like concat('%',#{title},'%')
+		</if>
+		<if test="pdate1!=null">
+			 and pdate >=#{pdate1}
+		</if>
+		<if test="pdate2!=null">
+			and pdate &lt;=#{pdate2}
+		</if>
+		order by id desc
+	</select>
+	<insert id="insert" parameterType="Tour">
+		insert into tour(title,content) values(#{title},#{content})
+	</insert>
+	<delete id="delete" parameterType="Integer">
+		delete from tour where id=#{0}
+	</delete>
+	<update id="update" parameterType="Tour">
+		update tour set title=#{title},content=#{content} where id=#{id}
+	</update>
+</mapper>

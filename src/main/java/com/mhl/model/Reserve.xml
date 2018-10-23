@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.ReserveMapper">
+	<select id="selectPersons" parameterType="string" resultType="Charts">
+		select '1月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-01-01') and last_day(concat(#{0},'-01-01'))
+	    union
+	    select '2月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-02-01') and last_day(concat(#{0},'-02-01'))
+	    union
+	    select '3月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-03-01') and last_day(concat(#{0},'-03-01'))
+	    union
+	    select '4月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-04-01') and last_day(concat(#{0},'-04-01'))
+	    union
+	    select '5月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-05-01') and last_day(concat(#{0},'-05-01'))
+	    union
+	    select '6月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-06-01') and last_day(concat(#{0},'-06-01'))
+	    union
+	    select '7月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-07-01') and last_day(concat(#{0},'-07-01'))
+	    union
+	    select '8月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-08-01') and last_day(concat(#{0},'-08-01'))
+	    union
+	    select '9月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-09-01') and last_day(concat(#{0},'-09-01'))
+	    union
+	    select '10月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-10-01') and last_day(concat(#{0},'-10-01'))
+	    union
+	    select '11月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-11-01') and last_day(concat(#{0},'-11-01'))
+	    union
+	    select '12月' name,ifnull(sum(persons),0) num from reserve
+	    where rtime between concat(#{0},'-12-01') and last_day(concat(#{0},'-12-01'))
+	</select>
+	
+	
+	<select id="seleone" parameterType="int" resultType="Reserve">
+		select a.*,c.id kid,b.hname from reserve a
+	    left join house b on a.hid=b.id
+	    left join kind c on b.kid=c.id
+	    where a.res!=-1 and a.id=#{0}
+	</select>
+	<select id="sele" parameterType="map" resultType="Reserve">
+		select a.*,b.hname,c.name kname from reserve a
+	    left join house b on a.hid=b.id
+	    left join kind c on b.kid=c.id
+	    where a.res!=-1 
+	    <if test="kid!=null"> and c.id=#{kid} </if>
+	    <if test="custom!=null"> and a.custom like concat('%',#{custom},'%') </if>
+	    <if test="phone!=null"> and a.phone like concat('%',#{phone},'%') </if>
+	    <if test="rdate!=null"> and a.rdate&gt;=#{rdate} </if>
+	    <if test="ldate!=null"> and a.rdate&lt;=#{ldate} </if>
+ 		order by a.id desc
+	</select>
+	<delete id="dele" parameterType="int">
+		update reserve set res=-1 where id=#{0}
+	</delete>	
+	<update id="update" parameterType="Reserve">
+		update reserve 
+		set custom=#{custom},wxnick=#{wxnick},phone=#{phone},
+		persons=#{persons},rdate=#{rdate},ldate=#{ldate},
+		hid=#{hid},price=#{price},total=#{total} where id=#{id}
+	</update>
+	<insert id="insert" parameterType="Reserve">
+		insert into reserve(custom,wxnick,phone,persons,rdate,ldate,hid,price,total)
+		 values(#{custom},#{wxnick},#{phone},#{persons},#{rdate},#{ldate},#{hid},#{price},#{total})
+	</insert>
+	
+</mapper>

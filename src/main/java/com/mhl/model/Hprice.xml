@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.HpriceMapper">
+	<resultMap type="Hprice" id="myhprice">
+		<id column="id" property="id"/>
+		<result column="kid" property="kid"/>
+		<result column="sdate" property="sdate"/>
+		<result column="edate" property="edate"/>
+		<result column="price" property="price"/>
+		<result column="dis" property="dis"/>
+		<result column="status" property="status"/>
+		<association property="kind" javaType="Kind">
+			<id column="idk" property="id"/>
+			<result column="name" property="name"/>
+			<result column="icon" property="icon"/>
+			<result column="info" property="info"/>
+		</association>
+	</resultMap>
+	
+	<select id="sele2" parameterType="map" resultType="Hprice">
+		select * from hprice 
+		where status!=-1 
+		and kid=#{kid} 
+		and sdate &lt;=#{sdate}
+		and edate &gt;=#{edate}
+		limit 0,1
+	</select>
+	<select id="sele" resultMap="myhprice">
+		select a.*,b.id idk,b.info,b.name,b.icon 
+		from hprice a left join kind b on a.kid=b.id 
+		where a.status!=-1 
+		order by a.id desc
+	</select>
+	<select id="seleone" parameterType="int" resultMap="myhprice">
+		select a.*,b.id idk,b.info,b.name,b.icon 
+		from hprice a left join kind b on a.kid=b.id 
+		where a.status!=-1 and a.id=#{0} 
+		order by a.id
+	</select>
+	<delete id="dele" parameterType="int">
+		update hprice set status=-1 where id=#{id}
+	</delete>
+	<update id="update" parameterType="Hprice">
+		update hprice set kid=#{kid},sdate=#{sdate},edate=#{edate},price=#{price},dis=#{dis} where id=#{id}
+	</update>
+	<insert id="insert" parameterType="Hprice">
+		insert into hprice(kid,sdate,edate,price,dis) values(#{kid},#{sdate},#{edate},#{price},#{dis})
+	</insert>
+	
+	
+	
+</mapper>

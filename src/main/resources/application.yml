@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hotel
+    username: root
+    password: root
+  servlet:
+    multipart:
+      max-file-size: 2097152
+      max-request-size: 209715200
+  
+mybatis:
+  config-location: classpath:Configuration.xml
+
+  
+  

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="House" type="com.mhl.model.House"/>
+		<typeAlias alias="Kind" type="com.mhl.model.Kind"/>
+		<typeAlias alias="Hprice" type="com.mhl.model.Hprice"/>
+		<typeAlias alias="Company" type="com.mhl.model.Company"/>
+		<typeAlias alias="Tour" type="com.mhl.model.Tour"/>
+		<typeAlias alias="Power" type="com.mhl.model.Power"/>
+		<typeAlias alias="Admin" type="com.mhl.model.Admin"/>
+		<typeAlias alias="Role" type="com.mhl.model.Role"/>
+		<typeAlias alias="Reserve" type="com.mhl.model.Reserve"/>
+		<typeAlias alias="Record" type="com.mhl.model.Record"/>
+		<typeAlias alias="Charts" type="com.mhl.model.Charts"/>
+	</typeAliases>
+	<plugins>
+	    <plugin interceptor ="com.github.pagehelper.PageHelper">
+	        <property name ="dialect" value="mysql"/>
+	        <property name ="offsetAsPageNum" value="true"/>
+	        <property name ="rowBoundsWithCount " value="true" />
+	        <property name ="pageSizeZero" value="true" />
+	        <property name ="reasonable" value="true" />
+	    </plugin>
+	</plugins>
+	<mappers>
+		<mapper resource="com/mhl/model/House.xml"/>
+		<mapper resource="com/mhl/model/Kind.xml"/>
+		<mapper resource="com/mhl/model/Hprice.xml"/>
+		<mapper resource="com/mhl/model/Company.xml"/>
+		<mapper resource="com/mhl/model/Tour.xml"/>
+		<mapper resource="com/mhl/model/Power.xml"/>
+		<mapper resource="com/mhl/model/Admin.xml"/>
+		<mapper resource="com/mhl/model/Role.xml"/>
+		<mapper resource="com/mhl/model/Reserve.xml"/>
+		<mapper resource="com/mhl/model/Record.xml"/>
+	</mappers>
+</configuration>

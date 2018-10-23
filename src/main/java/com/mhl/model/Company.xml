@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.CompanyMapper">
+
+	<select id="seleone" resultType="Company">
+		select * from company where id=1
+	</select>
+
+	<update id="updateimg" parameterType="Company">
+		update company set 
+		<if test="pica!=null">pica=#{pica},</if>
+		<if test="picb!=null">picb=#{picb},</if>
+		<if test="picc!=null">picc=#{picc},</if>
+		<if test="picd!=null">picd=#{picd},</if>
+		<if test="pice!=null">pice=#{pice},</if> 
+		<if test="picf!=null">picf=#{picf},</if>  
+		id=1
+		where id=1
+	</update>
+	
+	
+	<update id="update" parameterType="Company">
+		update company 
+		set name=#{name},
+		addr=#{addr},co=#{co},
+		phone=#{phone},tel=#{tel},
+		money=#{money},wifi=#{wifi},
+		hot=#{hot},tv=#{tv},
+		fcar=#{fcar},air=#{air},
+		info=#{info} where id=1
+	</update>
+	
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.KindMapper">
+	<resultMap type="Kind" id="mykind">
+		<id column="kid" property="id"/>
+		<result column="name" property="name"/>
+		<result column="icon" property="icon"/>
+		<result column="kinfo" property="info"/>
+		<collection property="houses" ofType="House">
+			<id column="id" property="id"/>
+			<result column="hname" property="hname"/>
+			<result column="size" property="size"/>
+			<result column="beds" property="beds"/>
+			<result column="price" property="price"/>
+			<result column="dis" property="dis"/>
+			<result column="info" property="info"/>
+			<result column="pica" property="pica"/>
+			<result column="picb" property="picb"/>
+			<result column="picc" property="picc"/>
+			<result column="picd" property="picd"/>
+			<result column="pice" property="pice"/>
+			<result column="picf" property="picf"/>
+			<result column="status" property="status"/>
+		</collection>
+	</resultMap>
+	<select id="selectOne" parameterType="int" resultMap="mykind">
+		select a.name,a.info kinfo,a.id kid,a.icon,b.* from kind a left join house b on a.id=b.kid where a.id=#{id}
+	</select>
+	<select id="select2" resultMap="mykind">
+		select a.name,a.info kinfo,a.id kid,a.icon,b.* from kind a left join house b on a.id=b.kid order by a.id desc
+	</select>
+	<select id="select" resultType="Kind">
+		select * from kind order by id desc
+	</select>
+	
+	<insert id="insert" parameterType="Kind">
+		insert into kind(name,icon,info) values(#{name},#{icon},#{info})
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from kind where id=#{id}
+	</delete>
+	<update id="update" parameterType="Kind">
+		update kind set name=#{name},icon=#{icon},info=#{info} where id=#{id}
+	</update>
+</mapper>

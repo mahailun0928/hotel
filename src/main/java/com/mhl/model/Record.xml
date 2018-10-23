@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mhl.mappers.RecordMapper">
+
+	<select id="seleone" parameterType="int" resultType="Record">
+		select a.*,c.id kid,b.hname from Record a
+	    left join house b on a.hid=b.id
+	    left join kind c on b.kid=c.id
+	    where a.status!=-1 and a.id=#{0}
+	</select>
+	<select id="sele" parameterType="map" resultType="Record">
+		select a.*,b.hname,c.name kname from Record a
+	    left join house b on a.hid=b.id
+	    left join kind c on b.kid=c.id
+	    where a.status!=-1 
+	    <if test="custom!=null"> and b.hname=#{custom} </if>
+	    <if test="phone!=null"> and a.phone like concat('%',#{phone},'%') </if>
+	    <if test="rtime!=null"> and a.rtime&gt;=#{rtime} </if>
+	    <if test="ltime!=null"> and a.rtime&lt;=#{ltime} </if>
+ 		order by a.status,a.id desc
+	</select>
+	<select id="selectPersons" parameterType="string" resultType="Charts">
+		select '1月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-01-01') and last_day(concat(#{0},'-01-01'))
+	    union
+	    select '2月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-02-01') and last_day(concat(#{0},'-02-01'))
+	    union
+	    select '3月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-03-01') and last_day(concat(#{0},'-03-01'))
+	    union
+	    select '4月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-04-01') and last_day(concat(#{0},'-04-01'))
+	    union
+	    select '5月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-05-01') and last_day(concat(#{0},'-05-01'))
+	    union
+	    select '6月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-06-01') and last_day(concat(#{0},'-06-01'))
+	    union
+	    select '7月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-07-01') and last_day(concat(#{0},'-07-01'))
+	    union
+	    select '8月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-08-01') and last_day(concat(#{0},'-08-01'))
+	    union
+	    select '9月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-09-01') and last_day(concat(#{0},'-09-01'))
+	    union
+	    select '10月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-10-01') and last_day(concat(#{0},'-10-01'))
+	    union
+	    select '11月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-11-01') and last_day(concat(#{0},'-11-01'))
+	    union
+	    select '12月' name,ifnull(sum(persons),0) num from record
+	    where rtime between concat(#{0},'-12-01') and last_day(concat(#{0},'-12-01'))
+	</select>
+	
+	
+	<delete id="dele" parameterType="Record">
+		update Record set status=1,ltime=#{ltime},total=#{total} where id=#{id}
+	</delete>	
+	<update id="update" parameterType="Record">
+		update Record 
+		set custom=#{custom},wxnick=#{wxnick},phone=#{phone},
+		persons=#{persons},ltime=#{ltime},
+		hid=#{hid},price=#{price},total=#{total} where id=#{id}
+	</update>
+	<insert id="insert" parameterType="Record">
+		insert into Record(custom,wxnick,phone,persons,ltime,hid,price,total)
+		 values(#{custom},#{wxnick},#{phone},#{persons},#{ltime},#{hid},#{price},#{total})
+	</insert>
+	
+</mapper>

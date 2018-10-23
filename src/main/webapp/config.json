@@ -1,0 +1,72 @@
+{
+    "imageActionName": "uploadimage", 
+    "imageFieldName": "upfile", 
+    "imageMaxSize": 2048000, 
+    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
+    "imageCompressEnable": true, 
+    "imageCompressBorder": 1600,
+    "imageInsertAlign": "none", 
+    "imageUrlPrefix": "http://localhost:8080/hotel",
+    "imagePathFormat": "/uploads/image/{yyyy}{mm}{dd}/{time}{rand:6}", 
+   
+    "scrawlActionName": "uploadscrawl", 
+    "scrawlFieldName": "upfile", 
+    "scrawlPathFormat": "/uploads/image/{yyyy}{mm}{dd}/{time}{rand:6}", 
+    "scrawlMaxSize": 2048000, 
+    "scrawlUrlPrefix": "http://localhost:8080/hotel", 
+    "scrawlInsertAlign": "none",
+
+    "snapscreenActionName": "uploadimage",
+    "snapscreenPathFormat": "/uploads/image/{yyyy}{mm}{dd}/{time}{rand:6}",
+    "snapscreenUrlPrefix": "http://localhost:8080/hotel",
+    "snapscreenInsertAlign": "none",
+
+    "catcherLocalDomain": ["127.0.0.1", "localhost", "img.baidu.com"],
+    "catcherActionName": "catchimage",
+    "catcherFieldName": "source", 
+    "catcherPathFormat": "/uploads/image/{yyyy}{mm}{dd}/{time}{rand:6}", 
+    "catcherUrlPrefix": "http://localhost:8080/hotel", 
+    "catcherMaxSize": 2048000, 
+    "catcherAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
+
+    "videoActionName": "uploadvideo", 
+    "videoFieldName": "upfile", 
+    "videoPathFormat": "/uploads/video/{yyyy}{mm}{dd}/{time}{rand:6}", 
+    "videoUrlPrefix": "http://localhost:8080/hotel", 
+    "videoMaxSize": 102400000, 
+    "videoAllowFiles": [
+        ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",
+        ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid"],
+
+    "fileActionName": "uploadfile", 
+    "fileFieldName": "upfile", 
+    "filePathFormat": "/uploads/file/{yyyy}{mm}{dd}/{time}{rand:6}",
+    "fileUrlPrefix": "http://localhost:8080/hotel", 
+    "fileMaxSize": 51200000, 
+    "fileAllowFiles": [
+        ".png", ".jpg", ".jpeg", ".gif", ".bmp",
+        ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",
+        ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid",
+        ".rar", ".zip", ".tar", ".gz", ".7z", ".bz2", ".cab", ".iso",
+        ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".txt", ".md", ".xml"
+    ],
+
+    "imageManagerActionName": "listimage", 
+    "imageManagerListPath": "/uploads/image/", 
+    "imageManagerListSize": 20, 
+    "imageManagerUrlPrefix": "http://localhost:8080/hotel", 
+    "imageManagerInsertAlign": "none",
+    "imageManagerAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"], 
+
+    "fileManagerActionName": "listfile", 
+    "fileManagerListPath": "/uploads/file/",
+    "fileManagerUrlPrefix": "http://localhost:8080/hotel",
+    "fileManagerListSize": 20, 
+    "fileManagerAllowFiles": [
+        ".png", ".jpg", ".jpeg", ".gif", ".bmp",
+        ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",
+        ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid",
+        ".rar", ".zip", ".tar", ".gz", ".7z", ".bz2", ".cab", ".iso",
+        ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".txt", ".md", ".xml"
+    ] 
+}
